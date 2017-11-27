@@ -12,6 +12,9 @@ const bot = new TelegramBot(token, {polling: true});
 bot.onText(/\/gongalomod/, (msg) => {
 
   if (msg.text) {
+
+    let text = msg.text.replace(/\/gongalomod/, '');
+
     bot.sendMessage(msg.chat.id, msg.from.first_name + " хотел сказать : " + fromElvesToRussian(text));
   }
 
@@ -20,12 +23,6 @@ bot.onText(/\/gongalomod/, (msg) => {
 bot.on('message', (msg) => {
 
   const chatId = msg.chat.id;
-
-console.log('CHAT ID', chatId);
-
-  if (msg.text && msg.text.toLowerCase().includes("флуд")) {
-    //bot.sendMessage(msg.chat.id, "Хочешь пофлудить, " + msg.from.first_name + "?");
-  }
 
   let translated = fromElvesToRussian(msg.text);
 
