@@ -45,7 +45,7 @@ bot.on('message', (msg) => {
     const spoilerId = Math.random();
 
     const spoiler = {
-      text: msg.txt,
+      text: msg.text,
       author: `${msg.from.first_name} ${msg.from.last_name}`
     };
 
