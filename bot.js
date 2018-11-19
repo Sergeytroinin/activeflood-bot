@@ -3,11 +3,21 @@ const fromElvesToRussian = require('./elves-translator');
 const config = require('./config.json');
 
 const app = require('express')();
+app.set('view engine', 'pug');
 const http = require('http').Server(app);
 const io = require('socket.io')(http);
 
 const token = config.token;
 const bot = new TelegramBot(token, {polling: true});
+
+
+const spoilers = {
+  456: {
+
+  }
+};
+
+
 
 bot.onText(/\/gongalomod/, (msg) => {
 
@@ -31,7 +41,20 @@ bot.on('message', (msg) => {
   }
 
   if(msg.text.includes('СПОЙЛЕР')) {
-    bot.deleteMessage(chatId, msg.message_id)
+
+    const spoilerId = Math.random();
+
+    const spoiler = {
+      text: msg.txt,
+      author: `${msg.from.first_name} ${msg.from.last_name}`
+    };
+
+    console.log(spoilerId);
+
+    spoilers[spoilerId] = spoiler;
+
+    bot.deleteMessage(chatId, msg.message_id);
+    // bot.sendMessage(chatId, `Посмотреть спойлер: http://45.32.234.128:3000/`)
   }
 
 });
@@ -39,6 +62,18 @@ bot.on('message', (msg) => {
 
 app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
+});
+
+app.get('/spoiler/:id', function(req, res){
+
+  const spoilerId = req.params.id;
+  const spoiler = spoilers[spoilerId];
+
+  if(!spoiler) {
+    res.status(404).send('Нет такого спойлера');
+  } else {
+    res.render('index', { title: 'Spoiler', text: spoiler.text });
+  }
 });
 
 
