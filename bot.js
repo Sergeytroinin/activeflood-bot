@@ -30,6 +30,10 @@ bot.on('message', (msg) => {
     bot.sendMessage(chatId, `Эльф в чате! Похоже он хотел сказать: ${translated}`);
   }
 
+  if(msg.text.includes('СПОЙЛЕР')) {
+    bot.deleteMessage(chatId, msg.message_id)
+  }
+
 });
 
 
