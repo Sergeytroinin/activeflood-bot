@@ -2,7 +2,7 @@ html
   head
     title= title
     link(href='https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic,cyrillic-ext', rel='stylesheet')
-    style
+    style(type='text/css').
         body {
             margin: 0;
             font-family: Roboto
@@ -18,4 +18,4 @@ html
             box-shadow: 2px 2px 1px #c3f775;
         }
   body
-    p.spoiler
+    p.spoiler= text

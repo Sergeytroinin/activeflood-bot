@@ -70,7 +70,7 @@ app.get('/spoiler/:id', function(req, res){
   if(!spoiler) {
     res.status(404).send('Нет такого спойлера');
   } else {
-    res.render('spoiler', { title: 'Spoiler', text: spoiler.text });
+    res.render('spoiler', { title: 'Spoiler', text: spoiler.text.replace(/(СПОЙЛЕР)/g, '') });
   }
 });
 
