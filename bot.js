@@ -49,12 +49,10 @@ bot.on('message', (msg) => {
       author: `${msg.from.first_name} ${msg.from.last_name}`
     };
 
-    console.log(spoilerId);
-
     spoilers[spoilerId] = spoiler;
 
     bot.deleteMessage(chatId, msg.message_id);
-    // bot.sendMessage(chatId, `Посмотреть спойлер: http://45.32.234.128:3000/`)
+    bot.sendMessage(chatId, `Посмотреть спойлер: http://45.32.234.128:3000/spoiler/${spoilerId}`)
   }
 
 });

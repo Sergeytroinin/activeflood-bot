@@ -1,5 +1,21 @@
 html
   head
     title= title
+    link(href='https://fonts.googleapis.com/css?family=Roboto&subset=cyrillic,cyrillic-ext', rel='stylesheet')
+    style
+        body {
+            margin: 0;
+            font-family: Roboto
+        }
+        .spoiler {
+            max-width: 400px;
+            display: block;
+            margin: 0 auto;
+            padding: 15px;
+            margin-top: 50px;
+            border-radius: 3px;
+            background-color: #e2fcbb;
+            box-shadow: 2px 2px 1px #c3f775;
+        }
   body
-    h1= text
+    p.spoiler
