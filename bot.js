@@ -1,6 +1,7 @@
 const TelegramBot = require('node-telegram-bot-api');
 const fromElvesToRussian = require('./elves-translator');
 const config = require('./config.json');
+const request = require('request');
 
 const app = require('express')();
 app.set('view engine', 'pug');
@@ -10,24 +11,47 @@ const io = require('socket.io')(http);
 const token = config.token;
 const bot = new TelegramBot(token, {polling: true});
 
+let JOKE = null;
 
-const spoilers = {
-  456: {
+setInterval(() => {
+  request('http://umorili.herokuapp.com/api/random?num=1', { json: true }, (err, res) => {
+    if (err) {
+      return console.log(err);
+    }
 
-  }
-};
+    const joke = strip_html_tags(res.body[0].elementPureHtml);
 
-
+    if(joke !== JOKE) {
+      JOKE = joke;
+      bot.sendMessage(msg.chat.id, joke);
+    }
+  })
+}, 1000 * 60 * 10);
 
 bot.onText(/\/gongalomod/, (msg) => {
-
   if (msg.text) {
-
     let text = msg.text.replace(/\/gongalomod/, '');
-
     bot.sendMessage(msg.chat.id, msg.from.first_name + " хотел сказать : " + fromElvesToRussian(text));
   }
+});
 
+function strip_html_tags(str)
+{
+  if ((str===null) || (str===''))
+    return false;
+  else
+    str = str.toString();
+  return str.replace(/<[^>]*>/g, '');
+}
+
+bot.onText(/\/joke/, (msg) => {
+  request('http://umorili.herokuapp.com/api/random?num=1', { json: true }, (err, res) => {
+    if (err) {
+      return console.log(err);
+    }
+
+    bot.sendMessage(msg.chat.id, strip_html_tags(res.body[0].elementPureHtml));
+  })
 });
 
 bot.on('message', (msg) => {
