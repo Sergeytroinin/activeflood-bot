@@ -50,7 +50,16 @@ bot.onText(/\/joke/, (msg) => {
       return console.log(err);
     }
 
-    bot.sendMessage(msg.chat.id, strip_html_tags(res.body[0].elementPureHtml));
+    const joke = strip_html_tags(res.body[0].elementPureHtml);
+
+    if(joke === JOKE) {
+      bot.sendMessage(msg.chat.id, 'Не время улыбаться');
+    } else {
+      JOKE = joke;
+      bot.sendMessage(msg.chat.id, joke);
+    }
+
+
   })
 });
 
