@@ -68,7 +68,14 @@ function getRandomInt(min, max) {
 }
 
 bot.onText(/\/roll/, msg => {
-  bot.sendMessage(msg.chat.id, getRandomInt(1, 100));
+  let text = msg.text.replace(/\/roll/, '');
+  let number = +text;
+
+  if (isNaN(number)) {
+    number = 100;
+  }
+
+  bot.sendMessage(msg.chat.id, getRandomInt(1, number));
 });
 
 bot.on('message', (msg) => {
