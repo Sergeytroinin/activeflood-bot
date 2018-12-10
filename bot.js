@@ -63,6 +63,14 @@ bot.onText(/\/joke/, (msg) => {
   })
 });
 
+function getRandomInt(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+bot.onText(/\/roll/, msg => {
+  bot.sendMessage(msg.chat.id, getRandomInt(1, 100));
+});
+
 bot.on('message', (msg) => {
 
   const chatId = msg.chat.id;
