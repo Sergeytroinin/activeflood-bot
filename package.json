@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "",
   "main": "bot.js",
-  "scripts": {},
+  "scripts": {
+    "deploy": "rsync -az --delete-after $TRAVIS_BUILD_DIR/public/ root@45.32.234.128:activeflood-bot && ssh -t root@45.32.234.128 'pm2 restart bot'"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",
