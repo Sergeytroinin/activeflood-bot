@@ -71,7 +71,7 @@ bot.onText(/\/roll/, msg => {
   let text = msg.text.replace(/\/roll/, '');
   let number = +text;
 
-  if (isNaN(number)) {
+  if (isNaN(number) || number === 0) {
     number = 100;
   }
 
